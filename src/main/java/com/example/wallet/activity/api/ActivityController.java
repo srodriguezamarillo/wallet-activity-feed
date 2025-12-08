@@ -29,12 +29,13 @@ public class ActivityController
 	@GetMapping
 	public ActivityFeedResponse getActivityFeed(@RequestParam String userId,
 			@RequestParam(required = false) ProductType product, @RequestParam(required = false) ActivityStatus status,
+			@RequestParam(required = false) String currency,
 			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant from,
 			@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant to,
 			@RequestParam(required = false) String search, @RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "20") int size)
 	{
-		return service.getActivityFeed(userId, product, status, from, to, search, page, size);
+		return service.getActivityFeed(userId, product, status, currency, from, to, search, page, size);
 	}
 
 	@GetMapping("/{id}")

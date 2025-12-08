@@ -33,12 +33,12 @@ public class ActivityFeedServiceImpl implements ActivityFeedService
 
 	@Override
 	@Cacheable(value = "activityFeed", condition = "#page == 0")
-	public ActivityFeedResponse getActivityFeed(String userId, ProductType product, ActivityStatus status, Instant from,
-			Instant to, String search, int page, int size)
+	public ActivityFeedResponse getActivityFeed(String userId, ProductType product, ActivityStatus status,
+			String currency, Instant from, Instant to, String search, int page, int size)
 	{
 		PageRequest pageRequest = PageRequest.of(page, size);
-		Page<ActivityEvent> result =
-				repository.searchFeed(userId, product, status, from, to, normalizeSearch(search), pageRequest);
+		Page<ActivityEvent> result = repository.searchFeed(userId, product, status, currency, from, to,
+				normalizeSearch(search), pageRequest);
 
 		return ActivityFeedResponse.builder().items(result.stream().map(this::toFeedItem).toList())
 				.page(result.getNumber()).size(result.getSize()).totalElements(result.getTotalElements())

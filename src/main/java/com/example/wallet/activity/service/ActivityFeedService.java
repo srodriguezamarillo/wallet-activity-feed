@@ -13,7 +13,7 @@ import java.time.Instant;
 public interface ActivityFeedService
 {
 
-	ActivityFeedResponse getActivityFeed(String userId, ProductType product, ActivityStatus status, Instant from,
+	ActivityFeedResponse getActivityFeed(String userId, ProductType product, ActivityStatus status, String currency, Instant from,
 			Instant to, String search, int page, int size);
 
 	ActivityDetailResponse getActivityDetail(String id);
