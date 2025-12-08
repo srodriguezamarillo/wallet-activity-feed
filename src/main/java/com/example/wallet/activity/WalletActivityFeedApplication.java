@@ -3,6 +3,7 @@ package com.example.wallet.activity;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 
 import com.example.wallet.activity.domain.*;
@@ -17,6 +18,7 @@ import java.util.Map;
  * Entry point for the wallet activity feed application.
  */
 @SpringBootApplication(scanBasePackages = "com.example.wallet.activity")
+@EnableCaching
 public class WalletActivityFeedApplication
 {
 

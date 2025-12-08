@@ -9,6 +9,7 @@ import com.example.wallet.activity.domain.ActivityStatus;
 import com.example.wallet.activity.domain.ProductType;
 import com.example.wallet.activity.repository.ActivityEventRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class ActivityFeedServiceImpl implements ActivityFeedService
 			DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm").withZone(ZoneId.of("UTC"));
 
 	@Override
+	@Cacheable(value = "activityFeed", condition = "#page == 0")
 	public ActivityFeedResponse getActivityFeed(String userId, ProductType product, ActivityStatus status, Instant from,
 			Instant to, String search, int page, int size)
 	{
