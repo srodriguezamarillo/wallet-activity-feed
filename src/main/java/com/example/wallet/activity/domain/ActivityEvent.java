@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.persistence.Index;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -21,7 +22,12 @@ import java.util.UUID;
  * Canonical representation of a financial activity in the unified feed.
  */
 @Entity
-@Table(name = "activity_events")
+@Table(
+		name = "activity_events",
+		indexes = { @Index(name = "idx_activity_user_occurred", columnList = "user_id,occurred_at"),
+				@Index(name = "idx_activity_product", columnList = "product"),
+				@Index(name = "idx_activity_status", columnList = "status"),
+				@Index(name = "idx_activity_currency", columnList = "currency") })
 @Data
 @Builder
 @NoArgsConstructor
