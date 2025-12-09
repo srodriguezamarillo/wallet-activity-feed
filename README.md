@@ -125,6 +125,7 @@ curl -X POST http://localhost:8080/api/v1/activity/events \
     "currency": "USD",
     "status": "COMPLETED",
     "occurredAt": "2025-01-01T12:00:00Z",
+    "externalId": "tx-card-001",
     "metadata": {"merchantName": "DEMO STORE"}
   }'
 ```
