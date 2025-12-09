@@ -29,4 +29,5 @@ app:
   kafka:
     enabled: true
     activity-topic: wallet.activity.events
+    dlq-topic: wallet.activity.events.dlq
 
