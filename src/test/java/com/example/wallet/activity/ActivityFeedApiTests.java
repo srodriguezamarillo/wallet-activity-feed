@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -107,12 +106,7 @@ class ActivityFeedApiTests
 	@Test
 	void shouldReturnActivityDetail() throws Exception
 	{
-		// First get an activity ID from the feed
-		String response = mockMvc.perform(get("/api/v1/activity").param("userId", "user-123"))
-				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-
-		// Extract first ID (simplified - in real scenario use JSON parsing)
-		// For now, we'll test with a known pattern
+		// Test with a known activity ID from seed data
 		mockMvc.perform(get("/api/v1/activity/97986d3d-2933-4664-afd8-7637ae1de726")).andExpect(status().isOk())
 				.andExpect(jsonPath("$.id").exists()).andExpect(jsonPath("$.userId").value("user-123"))
 				.andExpect(jsonPath("$.metadata").exists());
@@ -121,7 +115,8 @@ class ActivityFeedApiTests
 	@Test
 	void shouldReturnNotFoundForInvalidActivityId() throws Exception
 	{
-		mockMvc.perform(get("/api/v1/activity/invalid-id")).andExpect(status().isBadRequest());
+		mockMvc.perform(get("/api/v1/activity/invalid-id")).andExpect(status().isNotFound())
+				.andExpect(jsonPath("$.error").value("Activity not found"));
 	}
 
 	@Test
