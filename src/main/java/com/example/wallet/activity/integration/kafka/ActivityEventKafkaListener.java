@@ -32,6 +32,8 @@ public class ActivityEventKafkaListener
 	{
 		try
 		{
+			log.debug("Received activity event from Kafka: {}", payload);
+
 			WalletActivityEventMessage message = objectMapper.readValue(payload, WalletActivityEventMessage.class);
 
 			ActivityEvent event = ActivityEvent.builder().id(UUID.randomUUID().toString()).userId(message.getUserId())
@@ -41,11 +43,16 @@ public class ActivityEventKafkaListener
 
 			repository.save(event);
 
-			log.info("Ingested activity event from Kafka for user {} type {}", message.getUserId(), message.getType());
+			log.info("Ingested activity event - userId: {}, type: {}, product: {}, amount: {} {}",
+					message.getUserId(), message.getType(), message.getProduct(),
+					message.getAmount(), message.getCurrency());
 		}
 		catch (Exception ex)
 		{
-			log.error("Failed to handle activity event payload: {}", payload, ex);
+			log.error("Failed to handle activity event from Kafka - payload: {}, error: {}",
+					payload, ex.getMessage(), ex);
+			// Re-throw to trigger Kafka retry mechanism
+			throw new RuntimeException("Failed to process activity event", ex);
 		}
 	}
 }
