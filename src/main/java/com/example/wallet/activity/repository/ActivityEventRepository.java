@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.Instant;
+import java.util.Optional;
 
 /**
  * JPA repository for activity events.
@@ -40,4 +41,5 @@ public interface ActivityEventRepository extends JpaRepository<ActivityEvent, St
 			@Param("status") ActivityStatus status, @Param("currency") String currency, @Param("from") Instant from,
 			@Param("to") Instant to, @Param("search") String search, Pageable pageable);
 
+	Optional<ActivityEvent> findByExternalId(String externalId);
 }

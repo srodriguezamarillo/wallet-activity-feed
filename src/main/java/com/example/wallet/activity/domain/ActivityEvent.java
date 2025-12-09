@@ -43,6 +43,9 @@ public class ActivityEvent
 	@Column(name = "user_id", nullable = false, length = 64)
 	private String userId;
 
+	@Column(name = "external_id", length = 128, unique = true)
+	private String externalId;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "product", nullable = false, length = 32)
 	private ProductType product;

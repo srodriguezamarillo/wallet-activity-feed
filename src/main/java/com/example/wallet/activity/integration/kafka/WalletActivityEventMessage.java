@@ -30,4 +30,6 @@ public class WalletActivityEventMessage
 	private ActivityStatus status;
 	private Instant occurredAt;
 	private Map<String, Object> metadata;
+	// Idempotency key (optional). If not present, we fallback to metadata.transactionId.
+	private String externalId;
 }
